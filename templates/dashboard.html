@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+body{
+    font-family:Arial;
+    background:#f2f2f2;
+}
+
+.container{
+
+    width:80%;
+    margin:auto;
+    margin-top:40px;
+    background:white;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0px 0px 15px gray;
+
+}
+
+.card{
+
+    display:inline-block;
+    width:220px;
+    margin:20px;
+    padding:25px;
+    background:#1976d2;
+    color:white;
+    text-align:center;
+    border-radius:10px;
+    font-size:25px;
+
+}
+
+a{
+
+    text-decoration:none;
+    color:white;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1 align="center">Brain Stroke Prediction Dashboard</h1>
+
+<div class="card">
+
+<h3>Total Patients</h3>
+
+{{total}}
+
+</div>
+
+<div class="card">
+
+<h3>High Risk</h3>
+
+{{high}}
+
+</div>
+
+<div class="card">
+
+<h3>Low Risk</h3>
+
+{{low}}
+
+</div>
+<hr>
+
+<h2 align="center">Stroke Risk Distribution</h2>
+
+<center>
+
+<canvas id="riskChart" width="400" height="400"></canvas>
+
+</center>
+
+<br><br>
+
+<center>
+
+<a href="/">🏠 Home</a>
+
+&nbsp;&nbsp;&nbsp;&nbsp;
+
+<a href="/history">📋 History</a>
+
+</center>
+
+</div>
+<script>
+
+const ctx = document.getElementById("riskChart");
+
+new Chart(ctx,{
+
+type:'pie',
+
+data:{
+
+labels:["High Risk","Low Risk"],
+
+datasets:[{
+
+data:[{{high}},{{low}}],
+
+backgroundColor:[
+
+"#ff4d4d",
+
+"#4CAF50"
+
+]
+
+}]
+
+}
+
+});
+
+</script>
+
+</body>
+
+
+</html>

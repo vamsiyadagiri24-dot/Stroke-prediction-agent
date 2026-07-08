@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Patient History</title>
+
+    <style>
+
+        body{
+            font-family:Arial;
+            background:#f2f2f2;
+            padding:30px;
+        }
+
+        h1{
+            text-align:center;
+        }
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+            background:white;
+        }
+
+        th,td{
+            border:1px solid gray;
+            padding:10px;
+            text-align:center;
+        }
+
+        th{
+            background:#007bff;
+            color:white;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<h1>Patient Prediction History</h1>
+
+<table>
+
+<tr>
+
+<th>ID</th>
+<th>Gender</th>
+<th>Age</th>
+<th>Prediction</th>
+<th>Probability</th>
+
+</tr>
+
+{% for row in patients %}
+
+<tr>
+
+<td>{{row[0]}}</td>
+<td>{{row[1]}}</td>
+<td>{{row[2]}}</td>
+<td>{{row[11]}}</td>
+<td>{{row[12]}}%</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</body>
+</html>

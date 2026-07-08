@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Brain Stroke Prediction Agent</title>
+
+<style>
+
+body{
+    font-family:Arial,sans-serif;
+    background:#f0f2f5;
+}
+
+.container{
+
+    width:650px;
+    margin:30px auto;
+    background:white;
+    padding:30px;
+    border-radius:10px;
+    box-shadow:0px 0px 10px gray;
+
+}
+
+h1{
+
+text-align:center;
+color:#2c3e50;
+
+}
+
+label{
+
+font-weight:bold;
+
+}
+
+input,select{
+
+width:100%;
+padding:10px;
+margin-top:5px;
+margin-bottom:15px;
+border-radius:5px;
+border:1px solid gray;
+font-size:16px;
+
+}
+
+button{
+
+width:100%;
+padding:12px;
+background:#007BFF;
+color:white;
+font-size:18px;
+border:none;
+border-radius:5px;
+cursor:pointer;
+
+}
+
+button:hover{
+
+background:#0056b3;
+
+}
+
+.result{
+
+margin-top:25px;
+padding:20px;
+background:#ecf0f1;
+border-radius:8px;
+font-size:20px;
+text-align:center;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Brain Stroke Prediction Agent</h1>
+
+<label>Gender</label>
+
+<select id="gender">
+<option>Male</option>
+<option>Female</option>
+<option>Other</option>
+</select>
+
+<label>Age</label>
+
+<input type="number" id="age">
+
+<label>Hypertension</label>
+
+<select id="hypertension">
+<option value="0">No</option>
+<option value="1">Yes</option>
+</select>
+
+<label>Heart Disease</label>
+
+<select id="heart_disease">
+<option value="0">No</option>
+<option value="1">Yes</option>
+</select>
+
+<label>Ever Married</label>
+
+<select id="ever_married">
+<option>Yes</option>
+<option>No</option>
+</select>
+
+<label>Work Type</label>
+
+<select id="work_type">
+<option>Private</option>
+<option>Self-employed</option>
+<option>Govt_job</option>
+<option>children</option>
+<option>Never_worked</option>
+</select>
+
+<label>Residence Type</label>
+
+<select id="Residence_type">
+<option>Urban</option>
+<option>Rural</option>
+</select>
+
+<label>Average Glucose Level</label>
+
+<input type="number" id="avg_glucose_level" step="0.01">
+
+<label>BMI</label>
+
+<input type="number" id="bmi" step="0.01">
+
+<label>Smoking Status</label>
+
+<select id="smoking_status">
+<option>formerly smoked</option>
+<option>never smoked</option>
+<option>smokes</option>
+<option>Unknown</option>
+</select>
+
+<button onclick="predict()">Predict Stroke Risk</button>
+<br><br>
+
+<a href="/download_report">
+
+<button>
+
+Download PDF Report
+
+
+</button>
+<br><br>
+
+<a href="/dashboard">
+
+<button style="width:100%;padding:12px;background:#28a745;color:white;border:none;border-radius:5px;cursor:pointer;">
+
+Open Dashboard
+
+</button>
+
+</a>
+
+</a>
+
+<div class="result">
+
+<h2 id="risk"></h2>
+
+<h3 id="probability"></h3>
+
+</div>
+
+</div>
+
+<script>
+
+async function predict(){
+
+const response = await fetch("/predict",{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":"application/json"
+
+},
+
+body:JSON.stringify({
+
+gender:document.getElementById("gender").value,
+
+age:document.getElementById("age").value,
+
+hypertension:document.getElementById("hypertension").value,
+
+heart_disease:document.getElementById("heart_disease").value,
+
+ever_married:document.getElementById("ever_married").value,
+
+work_type:document.getElementById("work_type").value,
+
+Residence_type:document.getElementById("Residence_type").value,
+
+avg_glucose_level:document.getElementById("avg_glucose_level").value,
+
+bmi:document.getElementById("bmi").value,
+
+smoking_status:document.getElementById("smoking_status").value
+
+})
+
+});
+
+const data = await response.json();
+const result = document.querySelector(".result");
+
+result.innerHTML = `
+<h2>Prediction : ${data.risk}</h2>
+
+<h3>Probability : ${data.probability}%</h3>
+
+<h3>AI Health Recommendation</h3>
+
+<ul>
+${data.recommendation.map(item => `<li>${item}</li>`).join("")}
+</ul>
+`;
+
+}
+
+</script>
+
+</body>
+</html>
